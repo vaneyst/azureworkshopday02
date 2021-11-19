@@ -9,15 +9,17 @@ namespace AzureWorkshop.DayTwo.Receiver
     {
         private static readonly string _connectionString = "";
         private static readonly string _topicName = "some-topic-name";
-        private static readonly string _subscriptionName = Environment.MachineName;
 
         static async Task Main(string[] args)
         {
             await EnsureTopicAsync();
-            await EnsureSubscriptionAsync();
+
+            Console.WriteLine("Enter the subscription name:");
+
+            var subscriptionName = await EnsureSubscriptionAsync(Console.ReadLine());
 
             var client = new ServiceBusClient(_connectionString);
-            var receiver = client.CreateReceiver(_topicName, _subscriptionName);
+            var receiver = client.CreateReceiver(_topicName, subscriptionName);
 
             ServiceBusReceivedMessage message;
 
@@ -53,27 +55,29 @@ namespace AzureWorkshop.DayTwo.Receiver
             }
         }
 
-        private static async Task EnsureSubscriptionAsync()
+        private static async Task<string> EnsureSubscriptionAsync(string subscriptionName)
         {
             var client = new ServiceBusAdministrationClient(_connectionString);
-            var exists = await client.SubscriptionExistsAsync(_topicName, _subscriptionName);
+            var exists = await client.SubscriptionExistsAsync(_topicName, subscriptionName);
             if (exists)
             {
-                Console.WriteLine($"Subscription {_subscriptionName} on topic {_topicName} already exists.");
+                Console.WriteLine($"Subscription {subscriptionName} on topic {_topicName} already exists.");
             }
             else
             {
                 try
                 {
-                    Console.WriteLine($"Creating subscription {_subscriptionName} on topic {_topicName}...");
-                    await client.CreateSubscriptionAsync(_topicName, _subscriptionName);
-                    Console.WriteLine($"Created subscription {_subscriptionName} on topic {_topicName}.");
+                    Console.WriteLine($"Creating subscription {subscriptionName} on topic {_topicName}...");
+                    await client.CreateSubscriptionAsync(_topicName, subscriptionName);
+                    Console.WriteLine($"Created subscription {subscriptionName} on topic {_topicName}.");
                 }
                 catch (Exception e) when (e.Message.Contains("409"))
                 {
-                    Console.WriteLine($"Subscription {_subscriptionName} on topic {_topicName} was already created by another process.");
+                    Console.WriteLine($"Subscription {subscriptionName} on topic {_topicName} was already created by another process.");
                 }
             }
+
+            return subscriptionName;
         }
     }
 }

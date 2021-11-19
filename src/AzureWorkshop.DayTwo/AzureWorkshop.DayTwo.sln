@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31829.152
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureWorkshop.DayTwo.Sender", "AzureWorkshop.DayTwo.Sender\AzureWorkshop.DayTwo.Sender.csproj", "{03764A98-DD7F-469D-9E6D-43ACF1CD611B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureWorkshop.DayTwo.Receiver", "AzureWorkshop.DayTwo.Receiver\AzureWorkshop.DayTwo.Receiver.csproj", "{03E45304-91CD-4872-85AF-E88DB259A983}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03764A98-DD7F-469D-9E6D-43ACF1CD611B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03764A98-DD7F-469D-9E6D-43ACF1CD611B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03764A98-DD7F-469D-9E6D-43ACF1CD611B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03764A98-DD7F-469D-9E6D-43ACF1CD611B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03E45304-91CD-4872-85AF-E88DB259A983}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03E45304-91CD-4872-85AF-E88DB259A983}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03E45304-91CD-4872-85AF-E88DB259A983}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03E45304-91CD-4872-85AF-E88DB259A983}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EABDB20D-1D5D-4F34-9E75-1407603CC847}
+	EndGlobalSection
+EndGlobal

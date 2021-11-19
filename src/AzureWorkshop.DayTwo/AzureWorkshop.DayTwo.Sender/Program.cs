@@ -17,10 +17,13 @@ namespace AzureWorkshop.DayTwo.Sender
             var client = new ServiceBusClient(_connectionString);
             var sender = client.CreateSender(_topicName);
 
+            var i = 0;
             string message;
             while (!string.IsNullOrWhiteSpace(message = Console.ReadLine()))
             {
-                await sender.SendMessageAsync(new ServiceBusMessage(message));
+                var serviceBusMessage = new ServiceBusMessage(message);
+                serviceBusMessage.ApplicationProperties.Add("Number", i++);
+                await sender.SendMessageAsync(serviceBusMessage);
             }
 
             Console.WriteLine("Press any key to exit...");

@@ -25,7 +25,10 @@ namespace AzureWorkshop.DayTwo.Receiver
 
             while ((message = await receiver.ReceiveMessageAsync()) != null)
             {
-                Console.WriteLine(message.Body);
+                if (message.ApplicationProperties.TryGetValue("Number", out var number))
+                    Console.WriteLine($"{message.Body} - Number {number}");
+                else
+                    Console.WriteLine($"{message.Body} - Number not found.");
             }
 
             Console.WriteLine("Press any key to exit...");
@@ -68,7 +71,12 @@ namespace AzureWorkshop.DayTwo.Receiver
                 try
                 {
                     Console.WriteLine($"Creating subscription {subscriptionName} on topic {_topicName}...");
-                    await client.CreateSubscriptionAsync(_topicName, subscriptionName);
+                    var options = new CreateSubscriptionOptions(_topicName, subscriptionName)
+                    {
+
+                    };
+                    var rule = new CreateRuleOptions("rule", new SqlRuleFilter("Number % 2 = 0"));
+                    await client.CreateSubscriptionAsync(options, rule);
                     Console.WriteLine($"Created subscription {subscriptionName} on topic {_topicName}.");
                 }
                 catch (Exception e) when (e.Message.Contains("409"))

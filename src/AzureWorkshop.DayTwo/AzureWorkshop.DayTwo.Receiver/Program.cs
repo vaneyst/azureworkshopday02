@@ -16,6 +16,16 @@ namespace AzureWorkshop.DayTwo.Receiver
             await EnsureTopicAsync();
             await EnsureSubscriptionAsync();
 
+            var client = new ServiceBusClient(_connectionString);
+            var receiver = client.CreateReceiver(_topicName, _subscriptionName);
+
+            ServiceBusReceivedMessage message;
+
+            while ((message = await receiver.ReceiveMessageAsync()) != null)
+            {
+                Console.WriteLine(message.Body);
+            }
+
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }

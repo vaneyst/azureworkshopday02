@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
 
 namespace AzureWorkshop.DayTwo.Sender
@@ -12,6 +13,15 @@ namespace AzureWorkshop.DayTwo.Sender
         static async Task Main(string[] args)
         {
             await EnsureTopicAsync();
+
+            var client = new ServiceBusClient(_connectionString);
+            var sender = client.CreateSender(_topicName);
+
+            string message;
+            while (!string.IsNullOrWhiteSpace(message = Console.ReadLine()))
+            {
+                await sender.SendMessageAsync(new ServiceBusMessage(message));
+            }
 
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
